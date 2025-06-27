@@ -22,17 +22,24 @@ FeedForward network to store informstion of each token independently
 Videos I watched:
 
   [week1](https://www.youtube.com/watch?v=kqtD5dpn9C8)
+  
   [week 1](https://www.youtube.com/watch?v=QUT1VHiLmmI)
+  
   [week 1](https://www.youtube.com/watch?v=vmEHCJofslg)
+  
   [week 1](https://www.youtube.com/watch?v=DAQNHzOcO5A)
+
 
   vdo 74 to 84
   [week 2,3](https://www.youtube.com/watch?v=Gv9_4yMHFhI&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF)
 
+
   vdo 86 to 91
   [week 4](https://www.youtube.com/watch?v=Gv9_4yMHFhI&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF)
   
+  
   [week 5](https://www.youtube.com/watch?v=OIenNRt2bjg)
+  
   
   [week 6](https://www.youtube.com/watch?v=kCc8FmEb1nY)
   
