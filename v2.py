@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F 
 
 
-# hyper parameters
+
 
 batch_size = 64
 block_size = 256
@@ -22,7 +22,7 @@ torch.manual_seed(1337)
 with open ('input.txt','r', encoding = 'utf-8') as f:
     text = f.read()
 
-# sorting the unique characters.
+
 chars = sorted(list(set(text)))
 vocab_size = len(chars)
 
@@ -33,7 +33,7 @@ encode = lambda s: [stoi[c] for c in s]
 decode = lambda l: ''.join([itos[i] for i in l])
 
 
-# Encode the entire text dataset and store it into torch.tensor
+
 data = torch.tensor(encode(text), dtype=torch.long)
 
 # to check overfitting split into train and test data
@@ -41,9 +41,8 @@ n = int(0.9*len(data))
 train_data = data[:n]
 val_data = data[n:]
 
-# Define the function data loading 
-def get_batch(split):
-    # global train_data, val_data, block_size, batch_size
+
+def get_batch(split): 
     data = train_data if split == 'train' else val_data
     ix = torch.randint(len(data) - block_size, (batch_size,))
     x = torch.stack([data[i:i+block_size] for i in ix])
@@ -80,8 +79,7 @@ class Head(nn.Module) :
     def forward(self, x):
         B,T,C = x.shape
         k = self.key(x)
-        q = self.query(x)
-        # attention scores
+        q = self.query(x)      
         wei = q @ k.transpose(-2,-1) * k.shape[-1]**-0.5
         wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf'))
         wei = F.softmax(wei, dim=-1)
@@ -138,7 +136,7 @@ class Block(nn.Module):
         return x 
         
 
-# Loop through and show how the model sees input→target
+
 
 class BigramLanguageModel(nn.Module):
 
@@ -171,11 +169,10 @@ class BigramLanguageModel(nn.Module):
         tok_emb = self.token_embedding_table(idx)
         pos_emb = self.position_embedding_table(torch.arange(T, device=device))
         x = tok_emb + pos_emb
-        # x = self.sa_head(x)
-        # x = self.ffwd(x)
+       
         x = self.blocks(x)
         x = self.ln_f(x)
-        logits = self.lm_head(x)  # (B, T, C)
+        logits = self.lm_head(x)  
 
         if targets is None:
             loss = None
@@ -185,7 +182,7 @@ class BigramLanguageModel(nn.Module):
             targets = targets.view(B*T)
             loss = F.cross_entropy(logits, targets)
 
-        return logits, loss  #  FIXED: removed extra indentation
+        return logits, loss  
    
     def generate(self, idx, max_new_tokens):
         for _ in range(max_new_tokens):
@@ -198,7 +195,6 @@ class BigramLanguageModel(nn.Module):
         return idx
 
 model = BigramLanguageModel()
-# Initialize and run the model
 m = model.to(device)
 print(sum(p.numel() for p in m.parameters())/1e6, 'M parameters')
 
@@ -212,13 +208,11 @@ for iter in range(max_iters):
  
     xb, yb = get_batch('train')
 
-    # evaluate loss
     logits, loss = model(xb, yb)
     optimizer.zero_grad(set_to_none=True)
     loss.backward()
     optimizer.step()
 
-# print(loss.item())
 model.eval()
 context = torch.zeros((1,1), dtype=torch.long, device=device)
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
